@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import Cookies from "js-cookie";
 
 const BASE_URL = "https://chat-back-9x1d.onrender.com";
 
