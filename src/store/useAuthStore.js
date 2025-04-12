@@ -16,10 +16,10 @@ export const useAuthStore = create((set, get) => ({
 
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/auth/check",{
+      const res = await axiosInstance.get("/auth/check", {
         withCredentials: true,
       });
-      
+
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
@@ -47,19 +47,20 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      console.log("form adat",data)
-      const res = await axiosInstance.post("/auth/login", data,
-        {
-          withCredentials: true
-        }
-      );
+      console.log("form adat", data);
+      const res = await axiosInstance.post("/auth/login", data, {
+        withCredentials: true,
+      });
       console.log("response", res);
       set({ authUser: res.data });
+      const token = Cookies.get("jwt");
+
+      console.log("JWT Token:", token);
       toast.success("Logged in successfully");
 
       get().connectSocket();
     } catch (error) {
-      console.log("error type", error)
+      console.log("error type", error);
       toast.error(error.response.data.message);
     } finally {
       set({ isLoggingIn: false });
@@ -111,4 +112,4 @@ export const useAuthStore = create((set, get) => ({
   disconnectSocket: () => {
     if (get().socket?.connected) get().socket.disconnect();
   },
-})); 
+}));
