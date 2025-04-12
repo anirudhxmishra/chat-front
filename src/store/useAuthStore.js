@@ -53,6 +53,7 @@ export const useAuthStore = create((set, get) => ({
           withCredentials: true
         }
       );
+      console.log("response", res);
       set({ authUser: res.data });
       toast.success("Logged in successfully");
 
