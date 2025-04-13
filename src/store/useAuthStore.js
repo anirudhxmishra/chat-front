@@ -44,21 +44,18 @@ export const useAuthStore = create((set, get) => ({
       set({ isSigningUp: false });
     }
   },
-
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
       console.log("form adat", data);
       const res = await axiosInstance.post("/auth/login", data, {
-        withCredentials: true,
+        withCredentials: true, // Needed to send & receive cookies
       });
+  
       console.log("response", res);
       set({ authUser: res.data });
-      const token = Cookies.get("jwt");
-
-      console.log("JWT Token:", token);
+  
       toast.success("Logged in successfully");
-
       get().connectSocket();
     } catch (error) {
       console.log("error type", error);
@@ -67,6 +64,7 @@ export const useAuthStore = create((set, get) => ({
       set({ isLoggingIn: false });
     }
   },
+  
 
   logout: async () => {
     try {
